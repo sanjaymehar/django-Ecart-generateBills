@@ -1,0 +1,376 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+    background: #ddd;
+    min-height: 100vh;
+    vertical-align: middle;
+    display: flex;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold
+}
+
+.title {
+    margin-bottom: 5vh
+}
+
+.card {
+    margin: auto;
+    max-width: 950px;
+    width: 90%;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent
+}
+
+@media(max-width:767px) {
+    .card {
+        margin: 3vh auto
+    }
+}
+
+.cart {
+    background-color: #fff;
+    padding: 4vh 5vh;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem
+}
+
+@media(max-width:767px) {
+    .cart {
+        padding: 4vh;
+        border-bottom-left-radius: unset;
+        border-top-right-radius: 1rem
+    }
+}
+
+.summary {
+    background-color: #ddd;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 4vh;
+    color: rgb(65, 65, 65)
+}
+
+@media(max-width:767px) {
+    .summary {
+        border-top-right-radius: unset;
+        border-bottom-left-radius: 1rem
+    }
+}
+
+.summary .col-2 {
+    padding: 0
+}
+
+.summary .col-10 {
+    padding: 0
+}
+
+.row {
+    margin: 0
+}
+
+.title b {
+    font-size: 1.5rem
+}
+
+.main {
+    margin: 0;
+    padding: 2vh 0;
+    width: 100%
+}
+
+.col-2,
+.col {
+    padding: 0 1vh
+}
+
+a {
+    padding: 0 1vh
+}
+
+.close {
+    margin-left: auto;
+    font-size: 0.7rem
+}
+
+img {
+    width: 3.5rem
+}
+
+.back-to-shop {
+    margin-top: 4.5rem
+}
+
+h5 {
+    margin-top: 4vh
+}
+
+hr {
+    margin-top: 1.25rem
+}
+
+form {
+    padding: 2vh 0
+}
+
+select {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1.5vh 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: rgb(247, 247, 247)
+}
+
+input {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: rgb(247, 247, 247)
+}
+
+input:focus::-webkit-input-placeholder {
+    color: transparent
+}
+
+.btn {
+    background-color: #000;
+    border-color: #000;
+    color: white;
+    width: 100%;
+    font-size: 0.7rem;
+    margin-top: 4vh;
+    padding: 1vh;
+    border-radius: 0
+}
+
+.btn:focus {
+    box-shadow: none;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    -webkit-box-shadow: none;
+    -webkit-user-select: none;
+    transition: none
+}
+
+.btn:hover {
+    color: white
+}
+
+a {
+    color: black
+}
+
+a:hover {
+    color: black;
+    text-decoration: none
+}
+
+#code {
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center
+}
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div class="collapse" id="navbarToggleExternalContent" style="font-size: 22px;">
+            <div class="text-white bg-dark" >  
+                <ul class="nav " >    
+                    {% for i in category %}
+                <li class="nav-item ">
+                  <a class="nav-link text-white" href="#"  >{{i.name}}</a>
+                </li>     
+                {%endfor%}
+              </ul>
+             
+          </div>
+         </div>
+         
+          <nav class="navbar navbar-dark bg-dark ">
+            <div class="container-fluid">
+                <button class="navbar-toggler"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'categorypage'%}" data-abc="true">Home</a>
+                  {% if user.is_authenticated %}
+                  {% if user.is_active and user.is_superuser %}
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'addcategory'%}" data-abc="true">Add Category</a>
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'addproduct'%}" data-abc="true">Add Product</a>
+                  
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'all_cart'%}" data-abc="true">View All users Cart</a>
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'all_bill'%}" data-abc="true">View All users Bills</a>
+                  {%endif%}
+                  {%endif%}
+    
+                <div style="color: white;" class="nav justify-content-end">
+                <a href="{%url 'showcart'%}"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                  </svg></a>
+                    
+                    {% if user.is_authenticated %}
+                    <div><a class="btn btn-outline-primary btn-sm" href="{%url 'my_bill'%}" data-abc="true">My Bills</a></div>
+                    <div>
+                        <button class="btn btn-secondary " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hi {{request.user.first_name}}
+                        </button>
+                    </div>
+                    <div >
+                       
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                          
+                          <li><a class="dropdown-item" href="#">My Orders</a></li>
+                        </ul>
+                        
+                        <a href="{%url 'signout'%}" style="color: white;" onMouseOver="this.style.color='red'"onMouseOut="this.style.color='white'">Loguot</a>
+                        {% else %}
+                        <a href="{%url 'c-signup'%}" style="color: white;" onMouseOver="this.style.color='red'"onMouseOut="this.style.color='white'">signup</a>/
+                        <a href="{%url 'c-signin'%}" style="color: white;" onMouseOver="this.style.color='red'"onMouseOut="this.style.color='white'">Login</a>
+                      </div>
+                      {% endif %}
+                    
+                </div>
+            </div>
+            
+        </nav>
+    </div>
+    <form action="/paymentdone" id="mypay"></form>
+
+    <div class="card">
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col">
+                            <h4><b>Shopping Cart</b></h4>
+                        </div>
+                        <div class="col align-self-center text-right text-muted">{{carts.count}}</div>
+                    </div>
+                </div>
+                {% for i in carts %}
+                <div class="row border-top border-bottom">
+                    <div class="row main align-items-center">
+                        <div class="col-2"><img class="img-fluid" src="{{i.product.image.url}}"></div>
+                        <div class="col">
+                            <div class="row text-muted">{{i.product.catid.name}}</div>
+                            <div class="row">{{i.product.name}}</div>
+                        </div>
+                        <div class="col"> <button class="minus1" pid="{{i.product.id}}">-</button><a class="border">{{i.quantity}}</a><button class="add1" pid="{{i.product.id}}">+</button> </div>
+                        <div class="col">&#8377; {{i.product.price}} <a href="" class="remove-cart" pid="{{i.product.id}}"><span class="close">&#10005;</span></a></div>
+                    </div>
+                </div>
+                {%endfor%}
+                
+                <div class="back-to-shop"><a href="{% url 'categorypage' %}">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+            </div>
+            <div class="col-md-4 summary">
+                <div>
+                    <h5><b>Summary</b></h5>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col" style="padding-left:0;">TOTAL ITEMS = {{carts.count}}</div>
+                    <div class="col text-right" id="total">&#8377; {{total}}</div>
+                </div>
+                
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    <div class="col">TOTAL PRICE</div>
+                    <div class="col text-right" id="total2">&#8377; {{totalp}}</div>
+                </div>
+                <!-- Set up a container element for the button -->
+                    <div id="generatebill"><a class="btn btn-outline-primary btn-sm" href="{%url 'generatebill'%}" data-abc="true">Genetare bill</a></div> 
+                
+            </div>
+        </div>
+    </div>
+
+
+    
+    <script>
+    $('.add1').click(function () {
+    var id = $(this).attr("pid").toString();
+    var eml= this.parentNode.children[2]
+    
+    console.log(id)
+    $.ajax({
+        type:"GET",
+        url:"/pluscart",
+        data:{prod_id:id},
+        success:function(data){
+            window.location.reload();
+            console.log(data)
+            eml.innerText = data.quantity
+            document.getElementById("total").innerText = data.total
+            document.getElementById("total1").innerText = data.total
+            document.getElementById("total2").innerText = data.totalp
+            
+            
+        }
+    })
+    })
+
+
+
+    $('.minus1').click(function () {
+    var id = $(this).attr("pid").toString();
+    var eml= this.parentNode.children[0]
+    console.log(id)
+    $.ajax({
+        type:"GET",
+        url:"/minuscart",
+        data:{prod_id:id},
+        success:function(data){
+            window.location.reload();
+            console.log(data)
+            eml.innerText = data.quantity
+            document.getElementById("total").innerText = data.total
+            document.getElementById("total1").innerText = data.total
+            document.getElementById("total2").innerText = data.totalp
+        }
+    })
+    })
+
+
+    $('.remove-cart').click(function () {
+    var id = $(this).attr("pid").toString();
+    var eml= this
+    console.log(id)
+    $.ajax({
+        type:"GET",
+        url:"/removecart",
+        data:{prod_id:id},
+        success:function(data){
+            window.location.reload();
+            console.log(data)
+            
+            document.getElementById("total").innerText = data.total
+            document.getElementById("total1").innerText = data.total
+            document.getElementById("total2").innerText = data.totalp
+            eml.parentNode.remove()
+        }
+    })
+    })
+    </script>
+
+
+</body>
+</html>

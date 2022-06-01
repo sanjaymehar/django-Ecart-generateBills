@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <title>Document</title>
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+
+body {
+    background-color: #eee;
+    font-family: 'Calibri', sans-serif !important
+}
+
+.mt-100 {
+    margin-top: 100px
+}
+
+.card {
+    margin-bottom: 30px;
+    border: 0;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    letter-spacing: .5px;
+    border-radius: 8px;
+    -webkit-box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, .05);
+    box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, .05)
+}
+
+.card .card-header {
+    background-color: #fff;
+    border-bottom: none;
+    padding: 24px;
+    border-bottom: 1px solid #f6f7fb;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px
+}
+
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0
+}
+
+.card .card-body {
+    padding: 30px;
+    background-color: transparent
+}
+
+.btn-primary,
+.btn-primary.disabled,
+.btn-primary:disabled {
+    background-color: #4466f2 !important;
+    border-color: #4466f2 !important
+}
+    </style>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+
+        .back-to-shop {
+    margin-top: 4.5rem
+}
+        </style>
+</head>
+<body>
+    <div>
+        <div class="collapse" id="navbarToggleExternalContent" style="font-size: 22px;">
+            <div class="text-white bg-dark" >  
+                <ul class="nav " >    
+                    {% for i in category %}
+                <li class="nav-item ">
+                  <a class="nav-link text-white" href="#"  >{{i.name}}</a>
+                </li>     
+                {%endfor%}
+              </ul>
+             
+          </div>
+         </div>
+         
+          <nav class="navbar navbar-dark bg-dark ">
+            <div class="container-fluid">
+                <button class="navbar-toggler"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'categorypage'%}" data-abc="true">Home</a>
+                  {% if user.is_authenticated %}
+                  {% if user.is_active and user.is_superuser %}
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'addcategory'%}" data-abc="true">Add Category</a>
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'addproduct'%}" data-abc="true">Add Product</a>
+                  
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'all_cart'%}" data-abc="true">View All users Cart</a>
+                  <a class="btn btn-outline-primary btn-sm" href="{%url 'all_bill'%}" data-abc="true">View All users Bills</a>
+                  {%endif%}
+                  {%endif%}
+    
+                <div style="color: white;" class="nav justify-content-end">
+                <a href="{%url 'showcart'%}"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                  </svg></a>
+                    
+                    {% if user.is_authenticated %}
+                    <div><a class="btn btn-outline-primary btn-sm" href="{%url 'my_bill'%}" data-abc="true">My Bills</a></div>
+                    <div>
+                        <button class="btn btn-secondary " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hi {{request.user.first_name}}
+                        </button>
+                    </div>
+                    <div >
+                       
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                          
+                          <li><a class="dropdown-item" href="#">My Orders</a></li>
+                        </ul>
+                        
+                        <a href="{%url 'signout'%}" style="color: white;" onMouseOver="this.style.color='red'"onMouseOut="this.style.color='white'">Loguot</a>
+                        {% else %}
+                        <a href="{%url 'c-signup'%}" style="color: white;" onMouseOver="this.style.color='red'"onMouseOut="this.style.color='white'">signup</a>/
+                        <a href="{%url 'c-signin'%}" style="color: white;" onMouseOver="this.style.color='red'"onMouseOut="this.style.color='white'">Login</a>
+                      </div>
+                      {% endif %}
+                    
+                </div>
+            </div>
+            
+        </nav>
+    </div>
+    <div class="container-fluid mt-100">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Bill</h5>
+                    </div>
+                    <div class="card-body cart">
+                      <table>
+                        <tr>
+                          <th>User</th>
+                          <th>Product</th>
+                          <th>Quantity</th>
+                          <th>total_anount</th>
+                          <th>discout</th>
+                          <th>discounted_amount</th>
+                          
+                        </tr>
+                        <tr>{% for cart in bill %}
+                          <td>{{cart.user.first_name}}</td>
+                          <td>{{cart.products}}</td>
+                          <td>{{cart.quantity}}</td>
+                          <td>{{cart.total_anount}}</td>
+                          <td>{{cart.discout}}</td>
+                          <td>{{cart.discounted_amount}}</td>
+                        </tr>{% endfor %}
+                       
+                      </table>
+                        
+                            
+                        
+                    </div>
+                    <div class="back-to-shop"><a href="{% url 'categorypage' %}">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
